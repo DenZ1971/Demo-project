@@ -11,18 +11,25 @@ security:
                 property: email
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/                        
             security: false
         main:
+            user_checker: App\Security\UserChecker
             lazy: true
             provider: app_user_provider
 
+
             form_login:
+                
                 # "app_login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_target_path: /us/hello
+                default_target_path: app_login_redirect
+                
+                    
+
+                
 
             logout:
                 path: app_logout
@@ -40,7 +47,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/us, roles: ROLE_USER }
+         - { path: ^/user, roles: ROLE_USER }
 
 when@test:
     security:

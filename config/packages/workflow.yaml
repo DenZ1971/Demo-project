@@ -1,0 +1,30 @@
+framework:
+    workflows:
+        application:
+            type: 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'statusAsString'
+            supports:
+                - App\Entity\Application
+            initial_marking: created
+            places:
+                - created
+                - in_progress
+                - done
+                - complited
+            transitions:
+                in_progress:
+                    guard: 'is_granted("ROLE_ADMIN")'
+                    from: created
+                    to: in_progress
+                done:
+                    guard: 'is_granted("ROLE_ADMIN")'
+                    from: in_progress
+                    to: done
+                complited:
+                    guard: 'is_granted("ROLE_USER")'
+                    from: done 
+                    to: complited

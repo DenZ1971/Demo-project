@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ApplicationController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h2>Admin application list</h2>
+    
+
+    {% for application in applications %}
+    <h4><a href="{{ path('app_admin_application_show', {id: application.id}) }}">{{application.title}}</h4>
+    {% endfor %}
+
+    
+</div>
+<hr/>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if previous >= 0 %} 
+        <li class="page-item">
+          <a class="page-link" href="{{ path('app_admin_application', {offset:previous})}}">Previous</a>
+        </li>
+        {% endif %}
+        {% if next < applications|length %}
+        <li class="page-item">
+          <a class="page-link" href="{{path('app_admin_application', {offset:next})}}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+  </nav>
+
+{% endblock %}

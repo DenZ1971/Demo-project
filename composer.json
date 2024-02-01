@@ -10,8 +10,11 @@
     "doctrine/doctrine-bundle": "^2.8",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^2.14",
+    "sensio/framework-extra-bundle": "^6.2",
+    "symfony/asset": "6.2.*",
     "symfony/console": "6.2.*",
     "symfony/dotenv": "6.2.*",
+    "symfony/expression-language": "6.2.*",
     "symfony/flex": "^2",
     "symfony/form": "6.2.*",
     "symfony/framework-bundle": "6.2.*",
@@ -20,8 +23,11 @@
     "symfony/security-bundle": "6.2.*",
     "symfony/twig-bundle": "6.2.*",
     "symfony/validator": "6.2.*",
+    "symfony/workflow": "6.2.*",
     "symfony/yaml": "6.2.*",
-    "symfonycasts/verify-email-bundle": "^1.16"
+    "symfonycasts/verify-email-bundle": "^1.16",
+    "twbs/bootstrap": "5.3.2",
+    "twig/intl-extra": "^3.8"
   },
   "require-dev": {
     "symfony/debug-bundle": "6.2.*",

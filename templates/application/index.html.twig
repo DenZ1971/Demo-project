@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ApplicationController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="title">
+        <h2>Create new application</h2>
+    </div>
+    <table class="form">
+        <div class="mb-3">
+            <div class="form-control" id="title">
+                {{ form(application_form) }}
+            </div>
+        </div>
+    </table>
+    <div class="list_title">
+        <h2>application list</h2>
+    </div>
+    
+    <div class="applications">
+        {% for application in applications %}
+        <h4><a href="{{ path('app_application_show', {id: application.id}) }}">{{application.title}}</h4>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+

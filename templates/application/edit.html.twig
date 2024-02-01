@@ -1,0 +1,24 @@
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Application{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="title">
+        <h2>Edit application</h2>
+    </div>
+    <table class="form">
+        <div class="mb-3">
+            <div class="form-control" id="title">
+                {{ form(application_form) }}
+            </div>
+        </div>
+    </table>
+
+<a href="{{ path('app_application') }}">back to list</a>
+</div>
+{% endblock %}

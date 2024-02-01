@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,9 +19,10 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, ['required' => true])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'required' => true,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -49,17 +51,17 @@ class RegistrationFormType extends AbstractType
                     'USER' => 'ROLE_USER',
                     'ADMIN' => 'ROLE_ADMIN',
                 ],
-                'expanded' => false, // Раскрывающийся список (по умолчанию)
-                'multiple' => true, // Выбор только одного варианта (по умолчанию)
+                'expanded' => false, 
+                'multiple' => true, 
                 'label' => 'Select Role',
+                'required' => true,
                 
             ])
 
-            ->add('IsActive', CheckboxType::class, [
+            ->add('isActive', CheckboxType::class, [
                 'label'    => 'User is active',
                 'required' => false,
             ]);
-        ; 
     }
 
     public function configureOptions(OptionsResolver $resolver): void

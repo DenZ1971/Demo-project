@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20240129112202 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE application ADD create_by_user_id INT NOT NULL');
+        $this->addSql('ALTER TABLE application ADD CONSTRAINT FK_A45BDDC1CFD196D0 FOREIGN KEY (create_by_user_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_A45BDDC1CFD196D0 ON application (create_by_user_id)');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE application DROP FOREIGN KEY FK_A45BDDC1CFD196D0');
+        $this->addSql('DROP INDEX IDX_A45BDDC1CFD196D0 ON application');
+        $this->addSql('ALTER TABLE application DROP create_by_user_id');
+    }
+}
+
+
+
+
+{% if previous >= 0 %} 
+    <a href="{{ path('app_application', {offset:previous})}}">Previous</a>
+{% endif %}
+
+{% if next < applications|length %}
+    <a href="{{path('app_application', {offset:next})}}">Next</a>
+{% endif %}
+
+
+
+public function findByApplicationFilter(ApplicationFilter $applicationFilter)
+    {
+       $applications = $this->createQueryBuilder('a')
+           ->where('1=1');
+
+           if ($applicationFilter->getUser()) {
+               $applications
+                   ->andWhere('a.create_by_user = :user')
+                   ->setParameter('user', $applicationFilter->getUser());
+           }
+       ;
+    }
+
+
+
+
+
+    <table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ application.id }}</td>
+        </tr>
+        <tr>
+            <th>Application</th>
+            <td>{{ application.title }}</td>
+            <b>{{ application.status.value }}</b>
+            <p>Created at {{ application.createdAt|date('Y-m-d\\TH:i:sP') }}</p>
+
+        </tr>
+    </tbody>
+</table>

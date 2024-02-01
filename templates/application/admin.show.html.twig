@@ -1,0 +1,43 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Application details{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="title">
+        <h3>Application details</h3>
+    </div>
+    <table class="form">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ application.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ application.description }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ application.status.value }}</td>
+            </tr>
+            <tr>
+                <th>Date of creation</th>
+                <td>{{ application.createdAt|date('Y-m-d\\TH:i:sP') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ form(application_form)}}
+
+  {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_admin_application') }}">back to list</a>
+  {% else %}
+    <a href="{{ path('app_application') }}">back to list</a>
+  {% endif %}
+
+</div>
+
+{% endblock %}
