@@ -57,14 +57,14 @@ class ApplicationRepository extends ServiceEntityRepository
 //    /**
 //     * @return Application[] Returns an array of Application objects
 //     */
-    public function findByUserId($user_id): array
+    public function findByUserId($user_id)
     {
        return $this->createQueryBuilder('a')
            ->andWhere('a.create_by_user = :val')
            ->setParameter('val', $user_id)
            ->orderBy('a.created_at', 'ASC')
            ->getQuery()
-           ->getResult()
+           
         ;
     }
 }

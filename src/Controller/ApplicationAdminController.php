@@ -9,25 +9,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
 class ApplicationAdminController extends AbstractController
 {
     #[Route('/admin/application', name: 'app_admin_application')]
-    public function index(Request $request, ApplicationRepository $applicationRepository): Response
+    public function index(PaginatorInterface $paginator, Request $request, ApplicationRepository $applicationRepository): Response
     {
-            $offset = max(0, $request->query->getInt('offset',0));
-            $applications = $applicationRepository->getApplicationsPaginator($offset);
-            // $applications = $applicationRepository->findAll();
+            
+        $pagination = $paginator->paginate(
+            $applicationRepository->findAll(),
+            $request->query->getInt('offset', 1), /*page number*/
+            8 /*limit per page*/
+        );
+        
+            
             return $this->render('application/admin.index.html.twig', [
-                'applications' => $applications,
-                'previous' => $offset - ApplicationRepository::APPLICATIONS_PER_PAGE,
-                'next' => min(count($applications), $offset + ApplicationRepository::APPLICATIONS_PER_PAGE),
+                'pagination' => $pagination,
+                
             ]);
     }
-
 
     #[Route('/admin/application/{id}', name: 'app_admin_application_show')]
 

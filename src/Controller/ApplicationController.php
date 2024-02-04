@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
+use App\Message\PageMessage;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 
 
@@ -19,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApplicationController extends AbstractController
 {
     #[Route('/application', name: 'app_application')]
-    public function index(
+    public function index(PaginatorInterface $paginator,
         Request $request,
         EntityManagerInterface $em,
         ApplicationRepository $applicationRepository): Response
@@ -40,31 +44,19 @@ class ApplicationController extends AbstractController
 
             return $this->redirectToRoute('app_application');
         }
-        $filteredApplications = $applicationRepository->findByUserId($this->getUser()->getId());
-        if ($filteredApplications == null)
-        {
-            $offset = max(0, $request->query->getInt('offset', 0));
-            $applications = null;
+
+        $pagination = $paginator->paginate(
+            $applicationRepository->findByUserId($this->getUser()->getId()),
+            $request->query->getInt('offset', 1), /*page number*/
+            4 /*limit per page*/
+        );
+        
             return $this->render('application/index.html.twig', [
             'application_form' => $form,
-            'applications' => $applications,
-            'previous' => $offset - ApplicationRepository::APPLICATIONS_PER_PAGE,
-            'next' => null,
-            ]);
+            'pagination' => $pagination,
             
-        } else {
-
-            // $offset = max(0, $request->query->getInt('offset', 0));
-            $applications = $filteredApplications;   //->getApplicationsPaginator($offset);
-            return $this->render('application/index.html.twig', [
-            'application_form' => $form,
-            'applications' => $applications,
-            // 'previous' => $offset - ApplicationRepository::APPLICATIONS_PER_PAGE,
-            // 'next' => min(count($applications), $offset + ApplicationRepository::APPLICATIONS_PER_PAGE),
             ]);
-        }
-
-
+        
     }
 
     #[Route('/application/{id}', name: 'app_application_show')]
@@ -79,7 +71,7 @@ class ApplicationController extends AbstractController
     }
 
     #[Route('/application/{id}/edit', name: 'app_application_edit')]
-    public function edit(
+    public function edit(MessageBusInterface $bus,
         Request $request,
         Application $application,
         EntityManagerInterface $em,
@@ -106,9 +98,14 @@ class ApplicationController extends AbstractController
 
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+                $em->flush();
 
-            return $this->redirect('/application');
+                $bus->dispatch(new PageMessage($application->getId()));
+                
+
+
+
+                return $this->redirect('/application');
         }
 
         return $this->render('application/admin.show.html.twig', [

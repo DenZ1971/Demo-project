@@ -9,3 +9,6 @@
 /vendor/
 ###< symfony/framework-bundle ###
 /.docker/.env.nginx.local
+/my_new_app
+/other
+workflow.png
