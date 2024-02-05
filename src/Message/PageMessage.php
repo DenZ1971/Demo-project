@@ -6,13 +6,14 @@ namespace App\Message;
 
 class PageMessage
 {
-    public function __construct(private int $pageId)
+    public function __construct(private int $page)
     {
     }
-    public function getPageId(): int
+    public function getPage(): int
 
     {
-        return $this->pageId;
+
+        return $this->page;
     }
 }
 

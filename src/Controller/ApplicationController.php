@@ -101,7 +101,7 @@ class ApplicationController extends AbstractController
                 $em->flush();
 
                 $bus->dispatch(new PageMessage($application->getId()));
-                
+
 
 
 
