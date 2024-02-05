@@ -33,7 +33,7 @@ class MessageHandler
     {
         $pageId = $message->getPage();
 
-
+        $page = $this->applicationRepository->find($pageId);
         $page_title = $this->applicationRepository->find($pageId)->getTitle();
         $page_description = $this->applicationRepository->find($pageId)->getDescription();
         $page_status = $this->applicationRepository->find($pageId)->getStatusAsString();
@@ -52,7 +52,7 @@ class MessageHandler
 
         $email = (new Email())
             ->from('d.zapekin@gmail.com')
-            ->to('d.zapekin@gmail.com') //($page->getCreateByUser()->getEmail())
+            ->to($page->getCreateByUser()->getEmail())
             ->subject('Application confirmation')
             ->text("Here is your application confirmation $pageId")
             ->attach($applicationPdf, 'application.pdf');

@@ -15,4 +15,3 @@ class ApplicationFilter
 // // //    {
 // // //        return $this->user_id;
 // // //    }
-}

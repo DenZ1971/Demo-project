@@ -22,7 +22,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class ApplicationController extends AbstractController
 {
-    #[Route('/application', name: 'app_application')]
+    #[Route('/user/application', name: 'app_application')]
     public function index(PaginatorInterface $paginator,
         Request $request,
         EntityManagerInterface $em,
@@ -59,7 +59,7 @@ class ApplicationController extends AbstractController
         
     }
 
-    #[Route('/application/{id}', name: 'app_application_show')]
+    #[Route('/user/application/{id}', name: 'app_application_show')]
 
     public function show(Application $application): Response
     {   
@@ -70,7 +70,7 @@ class ApplicationController extends AbstractController
         ]);
     }
 
-    #[Route('/application/{id}/edit', name: 'app_application_edit')]
+    #[Route('/user/application/{id}/edit', name: 'app_application_edit')]
     public function edit(MessageBusInterface $bus,
         Request $request,
         Application $application,
@@ -105,7 +105,7 @@ class ApplicationController extends AbstractController
 
 
 
-                return $this->redirect('/application');
+                return $this->redirect('/user/application');
         }
 
         return $this->render('application/admin.show.html.twig', [
