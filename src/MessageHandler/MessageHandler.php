@@ -23,8 +23,6 @@ class MessageHandler
         $this->mailer = $mailer;
         $this->applicationRepository = $applicationRepository;
     }
-
-
     /**
      * @throws MpdfException
      * @throws TransportExceptionInterface

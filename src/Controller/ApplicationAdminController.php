@@ -16,7 +16,10 @@ use Knp\Component\Pager\PaginatorInterface;
 class ApplicationAdminController extends AbstractController
 {
     #[Route('/admin/application', name: 'app_admin_application')]
-    public function index(PaginatorInterface $paginator, Request $request, ApplicationRepository $applicationRepository): Response
+    public function index(
+        PaginatorInterface $paginator,
+        Request $request,
+        ApplicationRepository $applicationRepository): Response
     {
             
         $pagination = $paginator->paginate(

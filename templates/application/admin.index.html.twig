@@ -11,16 +11,16 @@
   <table class="form">
       <div class="mb-3">
           <div class="form-control" id="title">
-          <tr>
+            <tr>
           {# sorting of properties based on query components #}
-              <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
-              <th{% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>
-              {{ knp_pagination_sortable(pagination, 'Status', 'a.status') }}
-              </th>
-              <th{% if pagination.isSorted(['a.created_at']) %} class="sorted"{% endif %}>
-              {{ knp_pagination_sortable(pagination, 'Release', ['a.created_at']) }}
-              </th>
-          </tr>
+                <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+                <th{% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Status', 'a.status') }}
+                </th>
+                <th{% if pagination.isSorted(['a.created_at']) %} class="sorted"{% endif %}>
+                {{ knp_pagination_sortable(pagination, 'Release', ['a.created_at']) }}
+                </th>
+            </tr>
 
 
               {# table body #}
@@ -31,14 +31,15 @@
               <td>{{ article.createdAt | date('Y-m-d\\TH:i:sP') }}</td>
           </tr>
               {% endfor %}
-            </div>
           </div>
+      </div>
   </table>
-{# display navigation #}
-<div class="navigation">
-{{ knp_pagination_render(pagination) }}
-</div>
 
+    {# display navigation #}
+    <div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
 
 
 {% endblock %}

@@ -21,7 +21,6 @@
     </div>
     
     <table>
-        <table>
             <tr>
                 {# sorting of properties based on query components #}
                 <th>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
@@ -32,16 +31,14 @@
                     {{ knp_pagination_sortable(pagination, 'Release', ['a.created_at']) }}
                 </th>
             </tr>
-
-
-    {# table body #}
-    {% for article in pagination %}
+            {# table body #}
+            {% for article in pagination %}
         <tr {% if loop.index is odd %}class="color"{% endif %}>
             <td><h4><a href="{{ path('app_application_show', {id: article.id}) }}">{{article.title}}</h4></td>
             <td><h6>{{ article.statusAsString }}</h6></td>
             <td>{{ article.createdAt | date('Y-m-d\\TH:i:sP') }}</td>
         </tr>
-    {% endfor %}
+              {% endfor %}
     </table>
     {# display navigation #}
     <div class="navigation">
@@ -49,6 +46,3 @@
     </div>
 
 {% endblock %}
-
-
-

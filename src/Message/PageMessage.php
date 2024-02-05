@@ -12,7 +12,6 @@ class PageMessage
     public function getPage(): int
 
     {
-
         return $this->page;
     }
 }

@@ -32,5 +32,8 @@ class LoginController extends AbstractController
         if ($security->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('app_application');
         }
+
     }
+
+
 }

@@ -26,12 +26,12 @@ class ApplicationRepository extends ServiceEntityRepository
     public function getApplicationsPaginator(int $offset): Paginator
     {
         $qb = $this->createQueryBuilder('a')
-        // ->where('a.status = :created')
-        // ->setParameter('created', Status::Created)
-        ->orderBy('a.created_at', 'DESC')
-        ->setMaxResults(self::APPLICATIONS_PER_PAGE)
-        ->setFirstResult($offset)
-        ->getQuery();
+            ->where('a.status = :created')
+            ->setParameter('created', Status::Created)
+            ->orderBy('a.created_at', 'DESC')
+            ->setMaxResults(self::APPLICATIONS_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery();
 
         return new Paginator($qb);
     }
